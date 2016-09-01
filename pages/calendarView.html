@@ -3,7 +3,7 @@
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Calendar</title>
     <style>
         * {box-sizing:border-box;}
         ul {list-style-type: none;}
@@ -69,14 +69,15 @@
             font-size:12px;
             color: #777;
         }
-
+        .bookings li{
+            color: black;
+        }
         .rooms li {
             color: rgb(0, 163, 255);
         }
 
         .rooms ul {
             color: #777777;
-            background-color: rgba(244, 183, 180, 0.5);
         }
 
         .rooms li .active {
@@ -84,6 +85,8 @@
             background: #1abc9c;
             color: white !important
         }
+
+
 
     </style>
 </head>
@@ -103,34 +106,26 @@
         </ul>
     </div>
 
-        <ul class="hours">
+    <div class="calendar">
+        <ul ng-repeat="facility in facilities" class="hours">
             <li>Room</li>
-            <li>08:00</li>
-            <li>09:00</li>
-            <li>10:00</li>
-            <li>11:00</li>
-            <li>12:00</li>
-            <li>13:00</li>
-        </ul>
-
-        <ul ng-repeat="room in rooms" class="rooms">
-            <li>{{room.name}}</li>
-            <ul>
-                <li class="bookings" ng-repeat="booking in room.bookings">{{booking.description}}</li>
+            <li ng-repeat="available in facility.availability">{{available}}</li>
+        <ul ng-repeat="facility in facilities" class="rooms">
+            <ul ng-repeat="room in facility.rooms">
+                <li>{{room.name}}</li>
+                <li ng-repeat="booking in room.bookings" class="rooms">{{booking.description}}</li>
             </ul>
         </ul>
+            </ul>
 
+      <!--
+        <ul ng-repeat="room in facility.rooms" class="rooms">
+            <li>{{room.name}}</li>
 
-
-        <!--
-        <tr class="rooms">
-            <th>{{room.name}}</th>
-            <td>Fotballtrening</td>
-        </tr>
-        <tr class="rooms">
-            <th>Søndre hall</th>
-        </tr>
+            <li class="bookings" style="color:black" ng-repeat="booking in room.bookings">{{booking.description}}</li>
+        </ul>
         -->
+    </div>
 
 </div>
 
