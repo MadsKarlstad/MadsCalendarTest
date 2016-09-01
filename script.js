@@ -21,7 +21,7 @@ calendarApp.config(function ($routeProvider) {
 // create the controller
 calendarApp.controller('calendarController', function ($scope) {
 
-    $scope.rooms = [{name : "Nordre Hall"},{name : "Sondre Hall"}];
+    $scope.rooms = [{"name" : "Northern Hall", "bookings" : [{"description" : "Fotballtrening", "from" : 8, "to" : 9}]}, {"name" : "Southern Hall"}];
 
     console.log($scope.rooms);
 
