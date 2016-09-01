@@ -21,6 +21,10 @@ calendarApp.config(function ($routeProvider) {
 // create the controller
 calendarApp.controller('calendarController', function ($scope) {
 
+    $scope.rooms = [{name : "Nordre Hall"},{name : "Sondre Hall"}];
+
+    console.log($scope.rooms);
+
     $scope.message = 'Hello world';
 
 });
