@@ -21,10 +21,31 @@ calendarApp.config(function ($routeProvider) {
 // create the controller
 calendarApp.controller('calendarController', function ($scope) {
 
-    $scope.rooms = [{name : "Nordre Hall"},{name : "Sondre Hall"}];
+    var date = moment().format('YYYY-MM-DD');
+    $scope.date = date;
+    var day = moment().format('dddd');
+    $scope.day = day;
 
-    console.log($scope.rooms);
+    $scope.facilities = [
+        {"id" : "1",
+        "availability" : ["08:00","09:00","10:00","11:00","12:00","13:00","14:00"],
+        "rooms" :   [
+            {"name" : "Northern Hall", "bookings" : [
+                {"description" : "Football practice", "from" : "08:00", "to" : "09:00"},
+                {"description" : "Handball practice", "from" : "10:00", "to" : "11:00"}
+            ]},
+            {"name" : "Southern Hall", "bookings" : [
+                {"description" : "Football practice", "from" : "08:00", "to" : "09:00"}
+            ]}
+        ]}
+    ];
 
-    $scope.message = 'Hello world';
+
+    //$scope.rooms = [{"name" : "Northern Hall", "availability" : ["08:00","09:00","10:00","11:00","12:00","13:00"], "bookings" : [{"description" : "Football practice", "from" : "08:00", "to" : "09:00"},{"description" : "Handball practice", "from" : "10:00", "to" : "11:00"}]}, {"name" : "Southern Hall", "availability" : ["08:00","09:00","10:00","11:00","12:00","13:00"], "bookings" : [{"description" : "Football practice", "from" : "08:00", "to" : "09:00"}]}];
+
+
+    console.log($scope.facilities);
+
+    $scope.message = 'Homework for Mads';
 
 });

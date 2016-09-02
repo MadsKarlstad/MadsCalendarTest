@@ -3,140 +3,55 @@
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <style>
-        * {box-sizing:border-box;}
-        ul {list-style-type: none;}
-        body {font-family: Verdana,sans-serif;}
-
-        .day {
-            padding: 70px 25px;
-            width: 100%;
-            background: #1abc9c;
-        }
-
-        .calendar {
-            width: 100%;
-        }
-
-        .day ul {
-            margin: 0;
-            padding: 0;
-        }
-
-        .day ul li {
-            color: white;
-            font-size: 20px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-        }
-
-        .day .prev {
-            float: left;
-            padding-top: 10px;
-        }
-
-        .day .next {
-            float: right;
-            padding-top: 10px;
-        }
-
-        .hours {
-            margin: 0;
-            padding: 10px 0;
-            background-color: #ddd;
-        }
-
-        .hours tr {
-            display: inline-block;
-            width: 13.6%;
-            color: #666;
-            text-align: center;
-        }
-
-        .rooms {
-            padding: 10px 0;
-            background: #eee;
-            margin: 0;
-        }
-
-        .rooms tr {
-            list-style-type: none;
-            display: inline-block;
-            width: 13.6%;
-            text-align: center;
-            margin-bottom: 5px;
-            font-size:12px;
-            color: #777;
-        }
-
-        .rooms th {
-            color: rgb(0, 163, 255);
-        }
-
-        .rooms td {
-            color: #777777;
-            background-color: rgba(244, 183, 180, 0.5);
-        }
-
-        .rooms li .active {
-            padding: 5px;
-            background: #1abc9c;
-            color: white !important
-        }
-    </style>
+    <title>Calendar</title>
 </head>
 <body>
 
-<div>
-
-    <h1>Daily calendar</h1>
+<div class="calendarContainer">
 
     <div class="day">
+
         <ul>
             <li class="prev">❮</li>
             <li class="next">❯</li>
-            <li style="text-align: center">Thursday<br>
-                <span style="font-size: 18px">01.09.2016</span>
+            <li style="text-align: center">{{day}}<br>
+                <span style="font-size: 18px">{{date}}</span>
             </li>
         </ul>
+
     </div>
 
-    <table class="calendar">
-        <tr class="hours">
-            <th>Room</th>
-            <td>08:00</td>
-            <td>09:00</td>
-            <td>10:00</td>
-            <td>11:00</td>
-            <td>12:00</td>
-            <td>13:00</td>
-            <td>14:00</td>
-        </tr>
+    <div class="table">
+        <div class = "cal" ng-repeat="facility in facilities">
+            <div class="tr">
+                <div class="td">Room</div>
+                <div class="td" ng-repeat="available in facility.availability">{{available}}</div>
+            </div>
+            <div class="tr" ng-repeat="room in facility.rooms">{{room.name}}
+                <div class="td" ng-repeat="booking in room.bookings">{{booking.description}}</div>
+            </div>
+        </div>
+    </div>
 
 
+<!--
+    <div class="calendar">
+        <div class="hours">
+        <ul ng-repeat="facility in facilities">
 
-
-            <tr ng-repeat="room in rooms" class="rooms">
-                <th >{{room.name}}</th>
-            </tr>
-
-
-
-        <!--
-        <tr class="rooms">
-            <th>{{room.name}}</th>
-            <td>Fotballtrening</td>
-        </tr>
-        <tr class="rooms">
-            <th>Søndre hall</th>
-        </tr>
-        -->
-    </table>
-
+            <li>Room</li>
+            <li ng-repeat="available in facility.availability">{{available}}</li>
+            <ul ng-repeat="facility in facilities" class="rooms">
+                <ul ng-repeat="room in facility.rooms">
+                    <li>{{room.name}}</li>
+                    <li ng-repeat="booking in room.bookings" class="bookings" style="color:black">{{booking.description}}</li>
+                </ul>
+            </ul>
+        </ul>
+        </div>
+    </div>
+-->
 </div>
-
-
 
 </body>
 </html>

@@ -1,0 +1,58 @@
+* {box-sizing:border-box;}
+ul {
+    white-space: nowrap;
+    list-style-type: none;
+}
+body {font-family: Verdana,sans-serif;}
+
+.day {
+    padding: 70px 25px;
+    width: 100%;
+    background: lightskyblue;
+}
+
+.day ul {
+    margin: 0;
+    padding: 0;
+}
+
+.day ul li {
+    color: white;
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+.day .prev {
+    float: left;
+    padding-top: 10px;
+}
+
+.day .next {
+    float: right;
+    padding-top: 10px;
+}
+
+.calendar {
+    width: 250px;
+    height:250px;
+    position: relative;
+}
+
+.table {
+    display : table;
+}
+
+.cal tr{
+    width: 100%;
+}
+
+.tr {
+    display: table-row;
+    text-align: left;
+}
+
+.td {
+    display: table-cell;
+    text-align: left;
+}
