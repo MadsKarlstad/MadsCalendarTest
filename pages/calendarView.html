@@ -21,36 +21,32 @@
 
     </div>
 
+    <div class="table" ng-repeat="facility in facilities">
+            <span>Room</span>
+            <span ng-repeat="available in facility.availability">
+                {{available}}
+            </span>
+        <div ng-repeat="room in facility.rooms">
+            {{room.name}}
+            <span ng-repeat="booking in room.bookings">
+                {{booking.description}}
+            </span>
+        </div>
+    </div>
+
     <div class="table">
         <div class = "cal" ng-repeat="facility in facilities">
-            <div class="tr">
-                <div class="td">Room</div>
+            <div class="tr" id="topRow">
+                <div class="td" >Room</div>
                 <div class="td" ng-repeat="available in facility.availability">{{available}}</div>
             </div>
-            <div class="tr" ng-repeat="room in facility.rooms">{{room.name}}
-                <div class="td" ng-repeat="booking in room.bookings">{{booking.description}}</div>
+            <div class="tr" ng-repeat="room in facility.rooms">
+                <div class="td" id="roomName">{{room.name}}</div>
+                <div class="td" id="booking" ng-repeat="booking in room.bookings">{{booking.description}}</div>
             </div>
         </div>
     </div>
 
-
-<!--
-    <div class="calendar">
-        <div class="hours">
-        <ul ng-repeat="facility in facilities">
-
-            <li>Room</li>
-            <li ng-repeat="available in facility.availability">{{available}}</li>
-            <ul ng-repeat="facility in facilities" class="rooms">
-                <ul ng-repeat="room in facility.rooms">
-                    <li>{{room.name}}</li>
-                    <li ng-repeat="booking in room.bookings" class="bookings" style="color:black">{{booking.description}}</li>
-                </ul>
-            </ul>
-        </ul>
-        </div>
-    </div>
--->
 </div>
 
 </body>
