@@ -31,21 +31,24 @@ calendarApp.controller('calendarController', function ($scope) {
         "availability" : ["08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00"],
         "rooms" :   [
             {"name" : "Northern Hall", "bookings" : [
-                {"description" : "Football practice", "from" : "08:00", "to" : "09:00"},
-                {"description" : "Handball practice", "from" : "10:00", "to" : "11:00"},
-                {"description" : "Conference", "from" : "10:00", "to" : "11:00"}
+                {"description" : "Football practice", "date" : date, "from" : "08:00", "to" : "09:00"},
+                {"description" : "Handball practice", "date" : date, "from" : "10:00", "to" : "11:00"},
+                {"description" : "Conference", "date" : moment(date, 'DD-MM-YYYY').add('d',1).format('DD-MM-YYYY'), "from" : "10:00", "to" : "11:00"}
             ]},
             {"name" : "Southern Hall", "bookings" : [
-                {"description" : "Football practice", "from" : "08:00", "to" : "09:00"}
+                {"description" : "Bandy practice", "date" : date, "from" : "08:00", "to" : "09:00"}
             ]}
         ]}
     ];
 
+    $scope.changeDay = function (dato) {
+        date = dato;
 
-    //$scope.rooms = [{"name" : "Northern Hall", "availability" : ["08:00","09:00","10:00","11:00","12:00","13:00"], "bookings" : [{"description" : "Football practice", "from" : "08:00", "to" : "09:00"},{"description" : "Handball practice", "from" : "10:00", "to" : "11:00"}]}, {"name" : "Southern Hall", "availability" : ["08:00","09:00","10:00","11:00","12:00","13:00"], "bookings" : [{"description" : "Football practice", "from" : "08:00", "to" : "09:00"}]}];
+    };
 
-
-    console.log($scope.facilities);
+    $scope.test = function () {
+      console.log("Halla verden")
+    };
 
     $scope.message = 'Homework for Mads';
 

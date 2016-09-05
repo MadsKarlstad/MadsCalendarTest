@@ -57,6 +57,10 @@ body {font-family: Verdana,sans-serif;}
     padding-left: 1px;
 }
 
+#booking td {
+    height: 100%;
+}
+
 #topRow {
     font-weight: bold;
 }
