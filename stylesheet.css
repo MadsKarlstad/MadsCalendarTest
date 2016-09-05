@@ -33,17 +33,6 @@ body {font-family: Verdana,sans-serif;}
     padding-top: 10px;
 }
 
-.calendar {
-    width: 90vh;
-    position: relative;
-}
-
-.table {
-    display : table;
-    width: auto;
-    border-spacing: 1px;
-}
-
 .cal tr{
     width: 100%;
 }
@@ -57,7 +46,6 @@ body {font-family: Verdana,sans-serif;}
 .td {
     float: left;
     display: table-column;
-    width: 150px;
     border:1px solid;
 }
 

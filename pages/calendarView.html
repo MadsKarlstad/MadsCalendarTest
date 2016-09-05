@@ -37,16 +37,15 @@
     </div>
     -->
 
-
     <div class="table">
         <div class = "cal" ng-repeat="facility in facilities">
             <div class="tr" id="topRow">
-                <div class="td" >Room</div>
-                <div class="td" ng-repeat="available in facility.availability">{{available}}</div>
+                <!--<div class="td" >Room</div>-->
+                <div class="td" ng-style="{'width' : 'calc(100% / ' + (facility.availability.length) +')'}" ng-repeat="available in facility.availability">{{available}}</div>
             </div>
             <div class="tr" ng-repeat="room in facility.rooms">
-                <div class="td" id="roomName">{{room.name}}</div>
-                <div class="td" id="booking" ng-repeat="booking in room.bookings">{{booking.description}}</div>
+                <div class="td" id="roomName" style="white-space:nowrap;">{{room.name}}</div>
+                <div class="td" id="booking" ng-repeat="booking in room.bookings" ng-style="{'width' : 'calc(100% / ' + (facility.availability.length) +')'}">{{booking.description}}</div>
             </div>
         </div>
     </div>
