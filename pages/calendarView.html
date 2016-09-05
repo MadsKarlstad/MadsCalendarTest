@@ -1,9 +1,9 @@
-<div class="calendarContainer">
+<div class="calendarContainer" ng-init="init()">
 
     <div class="day">
         <ul>
-            <li class="prev">❮</li>
-            <a ng-href="#" class='next' ng-class = 'test()'>❯</a>
+            <a ng-href="#" class='prev' ng-click = 'prevDay()'>❮</a>
+            <a ng-href="#" class='next' ng-click = 'nextDay()'>❯</a>
             <li style="text-align: center">{{day}}<br>
                 <span style="font-size: 18px">{{date}}</span>
             </li>
@@ -14,7 +14,7 @@
         <div class = "cal" ng-repeat="facility in facilities">
             <div class="tr" id="topRow">
                 <!--<div class="td">Room</div>-->
-                <div class="td" ng-style="{'width' : 'calc(100% / ' + (facility.availability.length) +')'}" ng-repeat="available in facility.availability"> {{available}} </div>
+                <div class="td" ng-style="{'width' : 'calc(100% / ' + (facility.availability.length) +')'}" ng-repeat="available in facility.availability"  id = "subRepeat{{facility.availability.id}}"> {{available}} </div>
             </div>
             <div class="tr" ng-repeat="room in facility.rooms">
                 <!--<div class="td" id="roomName"> {{room.name}} </div>-->
