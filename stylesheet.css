@@ -47,6 +47,7 @@ body {font-family: Verdana,sans-serif;}
     float: left;
     display: table-column;
     border:1px solid;
+    word-wrap: break-word;
 }
 
 #roomName {

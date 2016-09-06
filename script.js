@@ -25,7 +25,11 @@ calendarApp.service('sharedProperties', function() {
     var day = moment().format('dddd');
     var facilities = [
         {"id" : "1",
-            "availability" : ["08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00"],
+            "" : {},
+            "availability" : [
+                {"startDate" : moment().format("06-09-2016", "DD-MM-YYYY"), "endDate" : "31-12-2016", "startHour" : moment().format("08:00", "HH:mm"), "endHour" : "14:00"},
+                {"startDate" : moment().format("31-12-2016", "DD-MM-YYYY"), "endDate" : "01-02-2016", "startHour" : moment().format("08:00", "HH:mm"), "endHour" : "18:00"}
+            ],
             "rooms" :   [
                 {"id": "1", "name" : "Northern Hall", "bookings" : [
                     {"description" : "Football practice", "date" : date, "from" : "08:00", "to" : "09:00", "roomID" : "1"},
@@ -66,6 +70,27 @@ calendarApp.service('sharedProperties', function() {
         getFacilities: function () {
             return facilities;
         },
+        getDateRange: function () {
+            for (i = 0; i < facilities[0].availability.length; i++){
+                var startDate = facilities[0].availability[i].startDate,
+                    endDate = facilities[0].availability[i].endDate;
+
+                if (moment(startDate, 'DD-MM-YYYY').diff(date, 'days')>=1 && moment(date, 'DD-MM-YYYY').diff(moment(endDate, 'DD-MM-YYYY'), 'days')>=1) {
+                    var hourArray = new Array();
+                    var startHour = moment().format(facilities[0].availability[i].startHour, 'HH:mm');
+                    var endHour = moment().format(facilities[0].availability[i].endHour, 'HH:mm');
+                    while (startHour <= endHour) {
+                        hourArray.push(startHour);
+                        startHour = moment(startHour, "HH:mm").add(1,'hours').hours();
+                        console.log(startHour);
+                        console.log(endHour);
+                    }
+                    return hourArray;
+                    console.log(hourArray);
+                }
+            }
+
+        },
         //returns the bookings for a given date
         getBookingsBasedOnDate: function () {
             var room1 = {"id": "1", "name" : "Northern Hall", "bookings" : []};
@@ -94,6 +119,7 @@ calendarApp.controller('calendarController', function ($scope, sharedProperties)
         $scope.facilities = sharedProperties.getFacilities();
         $scope.bookingsBasedOnDate = sharedProperties.getBookingsBasedOnDate();
         console.log(sharedProperties.getFacilities());
+        $scope.hourRange = sharedProperties.getDateRange();
     };
 
     $scope.nextDay = function () {
