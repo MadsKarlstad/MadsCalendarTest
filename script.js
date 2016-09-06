@@ -30,11 +30,16 @@ calendarApp.service('sharedProperties', function() {
                 {"id": "1", "name" : "Northern Hall", "bookings" : [
                     {"description" : "Football practice", "date" : date, "from" : "08:00", "to" : "09:00", "roomID" : "1"},
                     {"description" : "Handball practice", "date" : date, "from" : "10:00", "to" : "11:00", "roomID" : "1"},
-                    {"description" : "Conference", "date" : moment(date, 'DD-MM-YYYY').add(1,'d').format('DD-MM-YYYY'), "from" : "08:00", "to" : "09:00", "roomID" : "1"}
+                    {"description" : "Conference", "date" : moment(date, 'DD-MM-YYYY').add(1,'d').format('DD-MM-YYYY'), "from" : "08:00", "to" : "09:00", "roomID" : "1"},
+                    {"description" : "Bandy practice", "date" : moment(date, 'DD-MM-YYYY').add(2,'d').format('DD-MM-YYYY'), "from" : "08:00", "to" : "09:00", "roomID" : "1"},
+                    {"description" : "Futsal practice", "date" : moment(date, 'DD-MM-YYYY').add(2,'d').format('DD-MM-YYYY'), "from" : "09:00", "to" : "10:00", "roomID" : "1"}
                 ]},
                 {"id": "2", "name" : "Southern Hall", "bookings" : [
                     {"description" : "Bandy practice", "date" : date, "from" : "08:00", "to" : "09:00", "roomID" : "2"},
-                    {"description" : "Conference", "date" : moment(date, 'DD-MM-YYYY').add(1,'d').format('DD-MM-YYYY'), "from" : "08:00", "to" : "09:00", "roomID" : "2"}
+                    {"description" : "Football practice", "date" : moment(date, 'DD-MM-YYYY').add(1,'d').format('DD-MM-YYYY'), "from" : "08:00", "to" : "09:00", "roomID" : "2"},
+                    {"description" : "Badminton practice", "date" : moment(date, 'DD-MM-YYYY').add(2,'d').format('DD-MM-YYYY'), "from" : "08:00", "to" : "09:00", "roomID" : "2"},
+                    {"description" : "Dodgeball match", "date" : moment(date, 'DD-MM-YYYY').add(2,'d').format('DD-MM-YYYY'), "from" : "09:00", "to" : "10:00", "roomID" : "2"},
+                    {"description" : "Volleyball practice", "date" : moment(date, 'DD-MM-YYYY').add(2,'d').format('DD-MM-YYYY'), "from" : "10:00", "to" : "11:00", "roomID" : "2"}
                 ]}
             ]
         }
