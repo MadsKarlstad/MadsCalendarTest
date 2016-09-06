@@ -33,26 +33,34 @@ body {font-family: Verdana,sans-serif;}
     padding-top: 10px;
 }
 
-.calendar {
-    width: 250px;
-    height:250px;
-    position: relative;
-}
-
-.table {
-    display : table;
-}
-
 .cal tr{
     width: 100%;
 }
 
 .tr {
     display: table-row;
-    text-align: left;
+    display: inline-block;
+    width: 100%;
 }
 
 .td {
-    display: table-cell;
-    text-align: left;
+    float: left;
+    display: table-column;
+    border:1px solid;
+}
+
+#roomName {
+    color: dodgerblue;
+}
+
+#booking {
+    padding-left: 1px;
+}
+
+#booking td {
+    height: 100%;
+}
+
+#topRow {
+    font-weight: bold;
 }

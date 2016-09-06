@@ -1,57 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-<head>
-    <meta charset="UTF-8">
-    <title>Calendar</title>
-</head>
-<body>
-
-<div class="calendarContainer">
+<div class="calendarContainer" ng-init="init()">
 
     <div class="day">
-
         <ul>
-            <li class="prev">❮</li>
-            <li class="next">❯</li>
+            <a ng-href="#" class='prev' ng-click = 'prevDay()'>❮</a>
+            <a ng-href="#" class='next' ng-click = 'nextDay()'>❯</a>
             <li style="text-align: center">{{day}}<br>
                 <span style="font-size: 18px">{{date}}</span>
             </li>
         </ul>
-
     </div>
 
     <div class="table">
         <div class = "cal" ng-repeat="facility in facilities">
-            <div class="tr">
-                <div class="td">Room</div>
-                <div class="td" ng-repeat="available in facility.availability">{{available}}</div>
+            <div class="tr" id="topRow">
+                <!--<div class="td">Room</div>-->
+                <div class="td" ng-style="{'width' : 'calc(100% / ' + (facility.availability.length) +')'}" ng-repeat="available in facility.availability" id = "subRepeat{{facility.availability.id}}"> {{available}} </div>
             </div>
-            <div class="tr" ng-repeat="room in facility.rooms">{{room.name}}
-                <div class="td" ng-repeat="booking in room.bookings">{{booking.description}}</div>
+            <div class="tr" ng-repeat="item in bookingsBasedOnDate">
+                <!--<div class="td" id="roomName"> {{room.name}} </div>-->
+                <div class="td" id="booking" ng-repeat="booking in item.bookings" ng-style="{'width' : 'calc(100% / ' + (facility.availability.length) +')'}"> {{booking.description}} </div>
             </div>
         </div>
     </div>
 
-
-<!--
-    <div class="calendar">
-        <div class="hours">
-        <ul ng-repeat="facility in facilities">
-
-            <li>Room</li>
-            <li ng-repeat="available in facility.availability">{{available}}</li>
-            <ul ng-repeat="facility in facilities" class="rooms">
-                <ul ng-repeat="room in facility.rooms">
-                    <li>{{room.name}}</li>
-                    <li ng-repeat="booking in room.bookings" class="bookings" style="color:black">{{booking.description}}</li>
-                </ul>
-            </ul>
-        </ul>
-        </div>
-    </div>
--->
 </div>
-
-</body>
-</html>
