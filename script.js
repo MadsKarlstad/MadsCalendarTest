@@ -27,13 +27,14 @@ calendarApp.service('sharedProperties', function() {
         {"id" : "1",
             "availability" : ["08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00"],
             "rooms" :   [
-                {"name" : "Northern Hall", "bookings" : [
-                    {"description" : "Football practice", "date" : date, "from" : "08:00", "to" : "09:00"},
-                    {"description" : "Handball practice", "date" : date, "from" : "10:00", "to" : "11:00"},
-                    {"description" : "Conference", "date" : date, "from" : "10:00", "to" : "11:00"}
+                {"id": "1", "name" : "Northern Hall", "bookings" : [
+                    {"description" : "Football practice", "date" : date, "from" : "08:00", "to" : "09:00", "roomID" : "1"},
+                    {"description" : "Handball practice", "date" : date, "from" : "10:00", "to" : "11:00", "roomID" : "1"},
+                    {"description" : "Conference", "date" : moment(date, 'DD-MM-YYYY').add(1,'d').format('DD-MM-YYYY'), "from" : "08:00", "to" : "09:00", "roomID" : "1"}
                 ]},
-                {"name" : "Southern Hall", "bookings" : [
-                    {"description" : "Bandy practice", "date" : date, "from" : "08:00", "to" : "09:00"}
+                {"id": "2", "name" : "Southern Hall", "bookings" : [
+                    {"description" : "Bandy practice", "date" : date, "from" : "08:00", "to" : "09:00", "roomID" : "2"},
+                    {"description" : "Conference", "date" : moment(date, 'DD-MM-YYYY').add(1,'d').format('DD-MM-YYYY'), "from" : "08:00", "to" : "09:00", "roomID" : "2"}
                 ]}
             ]
         }
@@ -62,16 +63,20 @@ calendarApp.service('sharedProperties', function() {
         },
         //returns the bookings for a given date
         getBookingsBasedOnDate: function () {
-            facilities = [
-                {"id" : "1",
-                    "availability" : ["08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00"],
-                    "rooms" :   [
-                        {"name" : "Northern Hall", "bookings" : []},
-                        {"name" : "Southern Hall", "bookings" : []}
-                    ]
+            var room1 = {"id": "1", "name" : "Northern Hall", "bookings" : []};
+            var room2 = {"id": "2", "name" : "Southern Hall", "bookings" : []};
+            var roomTemp = [];
+            roomTemp.push(room1,room2);
+            var counter = 0;
+            for (i = 0; i < facilities[0].rooms.length; i++) {
+                for (j = 0; j < facilities[0].rooms[i].bookings.length; j++) {
+                    if (facilities[0].rooms[i].bookings[j].date == date) {
+                        roomTemp[i].bookings.push(facilities[0].rooms[i].bookings[j]);
+                        counter++;
+                    }
                 }
-            ];
-            return facilities;
+            }
+            return roomTemp;
         }
     }
 });
@@ -82,6 +87,8 @@ calendarApp.controller('calendarController', function ($scope, sharedProperties)
         $scope.date = sharedProperties.getDate();
         $scope.day = sharedProperties.getDay();
         $scope.facilities = sharedProperties.getFacilities();
+        $scope.bookingsBasedOnDate = sharedProperties.getBookingsBasedOnDate();
+        console.log(sharedProperties.getFacilities());
     };
 
     $scope.nextDay = function () {
