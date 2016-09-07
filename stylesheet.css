@@ -39,7 +39,7 @@ body {font-family: Verdana,sans-serif;}
 
 .tr {
     display: table-row;
-    display: inline-block;
+    display: inline;
     width: 100%;
 }
 
@@ -47,15 +47,20 @@ body {font-family: Verdana,sans-serif;}
     float: left;
     display: table-column;
     border:1px solid;
-    word-wrap: break-word;
+    height: 30px;
 }
+
+
 
 #roomName {
     color: dodgerblue;
 }
 
 #booking {
+
     padding-left: 1px;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 #booking td {
@@ -64,4 +69,13 @@ body {font-family: Verdana,sans-serif;}
 
 #topRow {
     font-weight: bold;
+
+}
+
+#topRow .td:first-child{
+    width:100px;
+}
+
+#bottomRow .td:first-child {
+    width:100px;
 }
