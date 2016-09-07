@@ -27,23 +27,23 @@ calendarApp.service('sharedProperties', function() {
         {"id" : "1",
             "" : {},
             "availability" : [
-                {"startDate" : moment().format("06-09-2016", "DD-MM-YYYY"), "endDate" : "31-12-2016", "startHour" : moment().format("08:00", "HH:mm"), "endHour" : "14:00"},
-                {"startDate" : moment().format("31-12-2016", "DD-MM-YYYY"), "endDate" : "01-02-2016", "startHour" : moment().format("08:00", "HH:mm"), "endHour" : "18:00"}
+                {"startDate" : moment().format("06-08-2016", "DD-MM-YYYY"), "endDate" : moment().format("30-10-2016", "DD-MM-YYYY"), "startHour" : moment().format("08:00", "HH:mm"), "endHour" : "14:00"},
+                {"startDate" : moment().format("31-12-2016", "DD-MM-YYYY"), "endDate" : moment().format("01-02-2017","DD-MM-YYYY"), "startHour" : moment().format("08:00", "HH:mm"), "endHour" : "18:00"}
             ],
             "rooms" :   [
                 {"id": "1", "name" : "Northern Hall", "bookings" : [
-                    {"description" : "Football practice", "date" : date, "from" : "08:00", "to" : "09:00", "roomID" : "1"},
+                    /**{"description" : "Football practice", "date" : date, "from" : "08:00", "to" : "09:00", "roomID" : "1"},
                     {"description" : "Handball practice", "date" : date, "from" : "10:00", "to" : "11:00", "roomID" : "1"},
                     {"description" : "Conference", "date" : moment(date, 'DD-MM-YYYY').add(1,'d').format('DD-MM-YYYY'), "from" : "08:00", "to" : "09:00", "roomID" : "1"},
                     {"description" : "Bandy practice", "date" : moment(date, 'DD-MM-YYYY').add(2,'d').format('DD-MM-YYYY'), "from" : "08:00", "to" : "09:00", "roomID" : "1"},
-                    {"description" : "Futsal practice", "date" : moment(date, 'DD-MM-YYYY').add(2,'d').format('DD-MM-YYYY'), "from" : "09:00", "to" : "10:00", "roomID" : "1"}
+                    {"description" : "Futsal practice", "date" : moment(date, 'DD-MM-YYYY').add(2,'d').format('DD-MM-YYYY'), "from" : "09:00", "to" : "10:00", "roomID" : "1"}**/
                 ]},
                 {"id": "2", "name" : "Southern Hall", "bookings" : [
-                    {"description" : "Bandy practice", "date" : date, "from" : "08:00", "to" : "09:00", "roomID" : "2"},
+
+                    /**{"description" : "Bandy practice", "date" : date, "from" : "08:00", "to" : "09:00", "roomID" : "2"},
                     {"description" : "Football practice", "date" : moment(date, 'DD-MM-YYYY').add(1,'d').format('DD-MM-YYYY'), "from" : "08:00", "to" : "09:00", "roomID" : "2"},
                     {"description" : "Badminton practice", "date" : moment(date, 'DD-MM-YYYY').add(2,'d').format('DD-MM-YYYY'), "from" : "08:00", "to" : "09:00", "roomID" : "2"},
-                    {"description" : "Dodgeball match", "date" : moment(date, 'DD-MM-YYYY').add(2,'d').format('DD-MM-YYYY'), "from" : "09:00", "to" : "10:00", "roomID" : "2"},
-                    {"description" : "Volleyball practice", "date" : moment(date, 'DD-MM-YYYY').add(2,'d').format('DD-MM-YYYY'), "from" : "10:00", "to" : "11:00", "roomID" : "2"}
+                    {"description" : "Dodgeball match", "date" : moment(date, 'DD-MM-YYYY').add(2,'d').format('DD-MM-YYYY'), "from" : "09:00", "to" : "10:00", "roomID" : "2"}**/
                 ]}
             ]
         }
@@ -71,24 +71,52 @@ calendarApp.service('sharedProperties', function() {
             return facilities;
         },
         getDateRange: function () {
+
             for (i = 0; i < facilities[0].availability.length; i++){
+
                 var startDate = facilities[0].availability[i].startDate,
                     endDate = facilities[0].availability[i].endDate;
+                var startUnix = moment(startDate).valueOf(),
+                    endUnix = moment(endDate).valueOf(),
+                    dateUnix = moment(date).valueOf();
 
-                if (moment(startDate, 'DD-MM-YYYY').diff(date, 'days')>=1 && moment(date, 'DD-MM-YYYY').diff(moment(endDate, 'DD-MM-YYYY'), 'days')>=1) {
+                /**console.log(startUnix);
+                console.log(dateUnix);
+                console.log(endUnix);**/
+
+                if(dateUnix > startUnix){
                     var hourArray = new Array();
-                    var startHour = moment().format(facilities[0].availability[i].startHour, 'HH:mm');
-                    var endHour = moment().format(facilities[0].availability[i].endHour, 'HH:mm');
+                    var startHour = moment(facilities[0].availability[i].startHour, 'H').hours();
+                    var endHour = moment(facilities[0].availability[i].endHour, 'H').hours();
                     while (startHour <= endHour) {
                         hourArray.push(startHour);
-                        startHour = moment(startHour, "HH:mm").add(1,'hours').hours();
-                        console.log(startHour);
-                        console.log(endHour);
+                        startHour = moment(startHour, "H").add(1,'hours').hours();
+
                     }
                     return hourArray;
-                    console.log(hourArray);
+                }
+
+
+                /**else {
+                    return [];
+                }**/
+            }
+        },
+        populateBookings: function (value) {
+            var hourArray = value;
+            var descriptionArray = ["","","","Football","Handball","Futsal","Volleyball","Conference","Dodgeball"];
+
+            for(i = 0; i < facilities[0].rooms.length; i++){
+                console.log(facilities[0].rooms[i].name);
+                for (j = 0; j < hourArray.length; j++){
+                    var booking = {"description": descriptionArray[Math.floor(Math.random() * descriptionArray.length)], "date" : date, "from" : hourArray[j], "to" : "", "roomID" : i+1};
+                    facilities[0].rooms[i].bookings.push(booking);
                 }
             }
+            //var booking = {"description": descriptionArray[Math.floor(Math.random() * descriptionArray.length)], "date" : date, "from" : "08:00", "to" : "09:00", "roomID" : "2"};
+            //facilities[0].rooms[1].bookings.push(booking);
+            //console.log(facilities[0].rooms[1].bookings);
+            return true;
 
         },
         //returns the bookings for a given date
@@ -117,9 +145,10 @@ calendarApp.controller('calendarController', function ($scope, sharedProperties)
         $scope.date = sharedProperties.getDate();
         $scope.day = sharedProperties.getDay();
         $scope.facilities = sharedProperties.getFacilities();
-        $scope.bookingsBasedOnDate = sharedProperties.getBookingsBasedOnDate();
         console.log(sharedProperties.getFacilities());
         $scope.hourRange = sharedProperties.getDateRange();
+        sharedProperties.populateBookings(sharedProperties.getDateRange());
+        $scope.bookingsBasedOnDate = sharedProperties.getBookingsBasedOnDate();
     };
 
     $scope.nextDay = function () {
