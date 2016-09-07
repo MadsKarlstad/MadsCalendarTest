@@ -14,11 +14,11 @@
         <div class = "cal" ng-repeat="facility in facilities">
             <div class="tr" id="topRow">
                 <!--<div class="td">Room</div>-->
-                <div class="td" ng-style="{'width' : 'calc(100% / ' + (facility.availability.length) +')'}" ng-repeat="available in facility.availability" id = "subRepeat{{facility.availability.id}}"> {{available}} </div>
+                <div class="td" ng-style="{'width' : 'calc(100% / ' + (hourRange.length) +')'}" ng-repeat="available in hourRange" id = "subRepeat{{facility.availability.id}}"> {{available}} </div>
             </div>
             <div class="tr" ng-repeat="item in bookingsBasedOnDate">
                 <!--<div class="td" id="roomName"> {{room.name}} </div>-->
-                <div class="td" id="booking" ng-repeat="booking in item.bookings" ng-style="{'width' : 'calc(100% / ' + (facility.availability.length) +')'}"> {{booking.description}} </div>
+                <div class="td" id="booking" ng-repeat="booking in item.bookings" ng-style="{'width' : 'calc(100% / ' + (hourRange.length) +')'}"> {{booking.description}} </div>
             </div>
         </div>
     </div>
