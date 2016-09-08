@@ -41,6 +41,7 @@ body {font-family: Verdana,sans-serif;}
     display: table-row;
     display: inline;
     width: 100%;
+    border-color: lightslategrey;
 }
 
 .td {
@@ -48,19 +49,21 @@ body {font-family: Verdana,sans-serif;}
     display: table-column;
     border:1px solid;
     height: 30px;
+    border-color: lightslategrey;
 }
 
-
-
 #roomName {
-    color: dodgerblue;
+    color: rgb(0,163,255);
+    border-color: lightslategrey;
+}
+
+#room {
+    border-color: darkgrey;
 }
 
 #booking {
 
     padding-left: 1px;
-    text-overflow: ellipsis;
-    overflow: hidden;
 }
 
 #booking td {
@@ -69,7 +72,7 @@ body {font-family: Verdana,sans-serif;}
 
 #topRow {
     font-weight: bold;
-
+    background-color: #f7f7f7;
 }
 
 #topRow .td:first-child{
@@ -78,4 +81,12 @@ body {font-family: Verdana,sans-serif;}
 
 #bottomRow .td:first-child {
     width:100px;
+}
+
+#true {
+    height:100%;
+    background-color: #F37C7C;
+    padding-left: 1%;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }

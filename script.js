@@ -9,18 +9,8 @@ var calendarApp = angular.module('calendarApp',['ngRoute']);
 calendarApp.config(function ($routeProvider) {
     $routeProvider
 
-        .when('/', {
-            templateUrl:    'pages/calendarView.html',
-            controller:     'calendarController'
-        })
-        .when('/date', {
-            templateUrl:    'pages/calendarView.html',
-            controller:     ''
-        })
-        .when('/about', {
-            templateUrl:    'pages/about.html',
-            controller:     ''
-        });
+        .when('/', {templateUrl: 'pages/calendarView.html', controller: 'calendarController'})
+        .when('/about', {templateUrl: 'pages/about.html', controller: 'calendarController'});
 });
 
 //create the service
@@ -101,7 +91,7 @@ calendarApp.service('sharedProperties', function() {
             var daybefore = moment(date, 'DD-MM-YYYY').subtract(1,'d').format('DD-MM-YYYY');
             event.stopPropagation();
             var hourArray = hour_Array;
-            var descriptionArray = ["","","","Football","Handball","Futsal","Volleyball","Conference","Dodgeball"];
+            var descriptionArray = ["","","","Football","Handball","Futsal","Volleyball","Conference","Dodgeball","Bandy"];
             var durationArray = [1,1,1,2];
             var dateArray = [date,daynext,daybefore];
             /**if (facilities[0].rooms[0].bookings.length != 0 && facilities[0].rooms[1].bookings.length != 0) {
@@ -121,7 +111,7 @@ calendarApp.service('sharedProperties', function() {
                         }
 
                         if (booking.duration > 1 && j <= dateArray.length) {
-                            var bookingCntn = {"description": "------------", "duration": 1,"date": booking.date,  "from": booking.from,"roomID" : booking.roomID, "to": booking.to,"booked": "true"}
+                            var bookingCntn = {"description": "", "duration": 1,"date": booking.date,  "from": booking.from,"roomID" : booking.roomID, "to": booking.to,"booked": "true"}
                             facilities[0].rooms[i].bookings.push(booking);
                             facilities[0].rooms[i].bookings.push(bookingCntn);
                             j++;
@@ -215,6 +205,10 @@ calendarApp.controller('calendarController', function ($scope, $http, $location,
 
     $scope.book = function (obj){
         sharedProperties.checkIfBookIsValid(obj);
+    };
+
+    $scope.addBooking = function () {
+
     };
 
     $scope.message = 'Homework for Mads';
