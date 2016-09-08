@@ -13,9 +13,13 @@ calendarApp.config(function ($routeProvider) {
             templateUrl:    'pages/calendarView.html',
             controller:     'calendarController'
         })
+        .when('/date', {
+            templateUrl:    'pages/calendarView.html',
+            controller:     ''
+        })
         .when('/about', {
             templateUrl:    'pages/about.html',
-            controller:     'calendarController'
+            controller:     ''
         });
 });
 
@@ -58,6 +62,7 @@ calendarApp.service('sharedProperties', function() {
         getFacilities: function () {
             return facilities;
         },
+
         getDateRange: function () {
 
             for (i = 0; i < facilities[0].availability.length; i++){
@@ -90,26 +95,46 @@ calendarApp.service('sharedProperties', function() {
                 }
             }
         },
+
         populateBookings: function (hour_Array) {
+            var daynext = moment(date, 'DD-MM-YYYY').add(1,'d').format('DD-MM-YYYY');
+            var daybefore = moment(date, 'DD-MM-YYYY').subtract(1,'d').format('DD-MM-YYYY');
+            event.stopPropagation();
             var hourArray = hour_Array;
             var descriptionArray = ["","","","Football","Handball","Futsal","Volleyball","Conference","Dodgeball"];
-            var dateArray = ["07-08-2016","08-08-2016","09-08-2016","10-08-2016","11-08-2016","12-08-2016","13-08-2016","14-08-2016","15-08-2016","16-08-2016"];
-
-            if (facilities[0].rooms[0].bookings.length != 0 && facilities[0].rooms[1].bookings.length != 0) {
+            var durationArray = [1,1,1,2];
+            var dateArray = [date,daynext,daybefore];
+            /**if (facilities[0].rooms[0].bookings.length != 0 && facilities[0].rooms[1].bookings.length != 0) {
                 return;
-            }
+            }**/
+            for( x = 0; x < dateArray.length; x++) {
+                for (i = 0; i < facilities[0].rooms.length; i++) {
+                    for (j = 0; j < hourArray.length; j++) {
+                        var booking = {"description": descriptionArray[Math.floor(Math.random() * descriptionArray.length)],
+                                        "duration" : durationArray[Math.floor(Math.random() * durationArray.length)], "date" : dateArray[x],
+                                        "from" : hourArray[j], "to" : moment(hourArray[j], "H").add(1,'hours').hours() + ":00", "roomID" : i+1,
+                                        "booked":"true"};
 
-            for(i = 0; i < facilities[0].rooms.length; i++) {
-                for (j = 0; j < hourArray.length; j++) {
-                    var booking = {"description": descriptionArray[Math.floor(Math.random() * descriptionArray.length)], "date" : date, "from" : hourArray[j], "to" : moment(hourArray[j], "H").add(1,'hours').hours() + ":00", "roomID" : i+1, "booked":"true"};
-                    if(booking.description == "") {
-                        booking.booked = "false";
+                        if (booking.description == "") {
+                            booking.booked = "false";
+                            booking.duration = 1;
+                        }
+
+                        if (booking.duration > 1 && j <= dateArray.length) {
+                            var bookingCntn = {"description": "------------", "duration": 1,"date": booking.date,  "from": booking.from,"roomID" : booking.roomID, "to": booking.to,"booked": "true"}
+                            facilities[0].rooms[i].bookings.push(booking);
+                            facilities[0].rooms[i].bookings.push(bookingCntn);
+                            j++;
+                        }
+                        else {
+                            facilities[0].rooms[i].bookings.push(booking);
+                        }
                     }
-                    facilities[0].rooms[i].bookings.push(booking);
                 }
             }
-            return;
+            return facilities;
         },
+
         //returns the bookings for a given date
         getBookingsBasedOnDate: function () {
             var room1 = {"id": "1", "name" : "Northern Hall", "bookings" : []};
@@ -127,44 +152,70 @@ calendarApp.service('sharedProperties', function() {
             }
             return roomTemp;
         },
+
+        isPopulated: function () {
+            for(i = 0; i < facilities[0].rooms.length; i++) {
+                for(j = 0; j < facilities[0].rooms[i].bookings.length; j++){
+                    if (facilities[0].rooms[i].bookings[j].date == date && facilities[0].rooms[i].bookings[j] != null) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+            }
+            return false;
+        },
+
         checkIfBookIsValid: function (value) {
             if (value.booked == "false") {
                 console.log("Available from " + value.from + " to " + value.to);
             }
             else {
-                console.log("Room unavailable at the given time")
+                console.log("Room unavailable at the given time");
             }
         }
     }
 });
 
 // create the controller
-calendarApp.controller('calendarController', function ($scope,$http, sharedProperties) {
+calendarApp.controller('calendarController', function ($scope, $http, $location, sharedProperties) {
 
     $scope.init = function () {
+        event.stopPropagation();
+        event.preventDefault();
+    };
+
+    $scope.populate = function () {
+
         $scope.date = sharedProperties.getDate();
         $scope.day = sharedProperties.getDay();
-        $scope.facilities = sharedProperties.getFacilities();
         $scope.hourRange = sharedProperties.getDateRange();
         sharedProperties.populateBookings(sharedProperties.getDateRange());
+        $scope.facilities = sharedProperties.getFacilities();
         $scope.bookingsBasedOnDate = sharedProperties.getBookingsBasedOnDate();
     };
 
     $scope.nextDay = function () {
-        $scope.day = sharedProperties.setDay(moment(sharedProperties.getDate(), 'DD-MM-YYYY').add(1,'d').format('dddd'));
-        $scope.date = sharedProperties.setDate(moment(sharedProperties.getDate(), 'DD-MM-YYYY').add(1,'d').format('DD-MM-YYYY'));
-        $scope.facilities = sharedProperties.getBookingsBasedOnDate();
+        sharedProperties.setDate(moment(sharedProperties.getDate(), 'DD-MM-YYYY').add(1,'d').format('DD-MM-YYYY'));
+        sharedProperties.setDay(moment(sharedProperties.getDay(), 'dddd').add(1,'d').format('dddd'))
+        $scope.date = sharedProperties.getDate();
+        $scope.day = sharedProperties.getDay();
+        $scope.bookingsBasedOnDate = sharedProperties.getBookingsBasedOnDate();
+        $scope.bookingsBasedOnDate = sharedProperties.getBookingsBasedOnDate();
     };
 
     $scope.prevDay = function () {
-        $scope.day = sharedProperties.setDay(moment(sharedProperties.getDate(), 'DD-MM-YYYY').subtract(1,'d').format('dddd'));
         $scope.date = sharedProperties.setDate(moment(sharedProperties.getDate(), 'DD-MM-YYYY').subtract(1,'d').format('DD-MM-YYYY'));
-        $scope.facilities = sharedProperties.getBookingsBasedOnDate();
+        sharedProperties.setDay(moment(sharedProperties.getDay(), 'dddd').subtract(1,'d').format('dddd'))
+        $scope.date = sharedProperties.getDate();
+        $scope.day = sharedProperties.getDay();
+        $scope.bookingsBasedOnDate = sharedProperties.getBookingsBasedOnDate();
     };
 
     $scope.book = function (obj){
         sharedProperties.checkIfBookIsValid(obj);
-    }
+    };
 
     $scope.message = 'Homework for Mads';
 
