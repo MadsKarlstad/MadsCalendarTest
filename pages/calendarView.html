@@ -2,24 +2,33 @@
 
     <div class="day">
         <ul>
-            <a ng-href="#" class='prev' ng-click = 'prevDay()'>❮</a>
-            <a ng-href="#" class='next' ng-click = 'nextDay()'>❯</a>
+            <div class='prev' data-ng-click = 'prevDay()'>❮</div>
+            <div class='next' data-ng-click = 'nextDay()'>❯</div>
             <li style="text-align: center">{{day}}<br>
                 <span style="font-size: 18px">{{date}}</span>
             </li>
         </ul>
     </div>
 
-    <div class="table">
+    <div class="table" ng-init="populate()">
         <div class = "cal" ng-repeat="facility in facilities">
             <div class="tr" id="topRow">
                 <div class="td">Room</div>
                 <div class="td" ng-style="{'width' : 'calc((100% - 100px) / ' + (hourRange.length) +')'}" ng-repeat="available in hourRange" id = "subRepeat{{facility.availability.id}}"> {{available}} </div>
             </div>
-            <div class="tr" id="bottomRow" ng-repeat="room in bookingsBasedOnDate">
-                <div class="td" id="roomName"> {{room.name}} </div>
-                <div class="td" id="booking" ng-repeat="booking in room.bookings" ng-style="{'width' : 'calc((100% - 100px) / ' + (hourRange.length) +')'}" ng-click="book(booking)"> {{booking.description}} </div>
+            <div ng-repeat="facility in facilities">
+                <div class="tr" id="bottomRow" ng-repeat="room in bookingsBasedOnDate">
+                    <div class="td" id="roomName">{{room.name}}</div>
+                    <div class="td" id="booking" ng-repeat="booking in room.bookings" ng-style="{'width' : 'calc((100% - 100px) / ' + (hourRange.length) +')'}" ng-click="book(booking)">
+                        {{booking.description}}
+                    </div>
+                </div>
+
             </div>
+            <!--<div class="tr" id="bottomRow" ng-repeat="room in bookingsBasedOnDate">
+                <div class="td" id="roomName"> {{room.name}} </div>
+                <div class="td" id="booking" ng-repeat="booking in room.bookings" ng-style="{'width' : 'calc((100% - 100px) / ' + (hourRange.length) +')'}" ng-click="book(booking)"> {{booking.date}} </div>
+            </div>-->
         </div>
     </div>
 
