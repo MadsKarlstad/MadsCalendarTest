@@ -23,15 +23,7 @@ body {font-family: Verdana,sans-serif;}
     letter-spacing: 3px;
 }
 
-.day .prev {
-    float: left;
-    padding-top: 10px;
-}
 
-.day .next {
-    float: right;
-    padding-top: 10px;
-}
 
 .cal tr{
     width: 100%;
@@ -83,10 +75,43 @@ body {font-family: Verdana,sans-serif;}
     width:100px;
 }
 
-#true {
+.true {
     height:100%;
     background-color: #F37C7C;
     padding-left: 1%;
     text-overflow: ellipsis;
     overflow: hidden;
+}
+
+#2 {
+    font-weight: bold;
+}
+
+.table {
+    display: block;
+}
+
+.header {
+    padding: 70px 5px;
+    width: 100%;
+    display: block;
+}
+
+.header .dayToggle {
+    display: inline;
+    white-space: nowrap;
+    padding: 32px;
+    float: left;
+}
+
+.header .title {
+    display: block;
+    float: left;
+    white-space: nowrap;
+    padding: 8px;
+    float: left;
+}
+
+.header .dayOverview {
+
 }
