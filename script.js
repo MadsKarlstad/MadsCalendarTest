@@ -59,9 +59,9 @@ calendarApp.service('sharedProperties', function() {
 
                 var startDate = facilities[0].availability[i].startDate,
                     endDate = facilities[0].availability[i].endDate;
-                var startUnix = moment(startDate).valueOf(),
-                    endUnix = moment(endDate).valueOf(),
-                    dateUnix = moment(date).valueOf();
+                var startUnix = moment(startDate, "DD-MM-YYYY").valueOf(),
+                    endUnix = moment(endDate, "DD-MM-YYYY").valueOf(),
+                    dateUnix = moment(date, "DD-MM-YYYY").valueOf();
 
                 /**console.log(startUnix);
                 console.log(dateUnix);
@@ -91,9 +91,13 @@ calendarApp.service('sharedProperties', function() {
             var daybefore = moment(date, 'DD-MM-YYYY').subtract(1,'d').format('DD-MM-YYYY');
             event.stopPropagation();
             var hourArray = hour_Array;
-            var descriptionArray = ["","","","Football","Handball","Futsal","Volleyball","Conference","Dodgeball","Bandy"];
+            var descriptionArray = ["","","","Football","Handball","Futsal","Volleyball","Conference","Dodgeball","Bandy","Quidditch"];
             var durationArray = [1,1,1,2];
             var dateArray = [date,daynext,daybefore];
+            for (i=0;i<10;i++){
+                daynext = moment(daynext, 'DD-MM-YYYY').add(1,'d').format('DD-MM-YYYY');
+                dateArray.push(daynext);
+            }
             /**if (facilities[0].rooms[0].bookings.length != 0 && facilities[0].rooms[1].bookings.length != 0) {
                 return;
             }**/
@@ -109,14 +113,14 @@ calendarApp.service('sharedProperties', function() {
                             booking.booked = "false";
                             booking.duration = 1;
                         }
-
-                        if (booking.duration > 1 && j <= dateArray.length) {
-                            var bookingCntn = {"description": "", "duration": 1,"date": booking.date,  "from": booking.from,"roomID" : booking.roomID, "to": booking.to,"booked": "true"}
+                        if (booking.duration > 1 && j < dateArray.length) {
+                            var bookingCntn = {"description": "", "duration": 0,"date": booking.date,  "from": booking.from,"roomID" : booking.roomID, "to": booking.to,"booked": "true"};
                             facilities[0].rooms[i].bookings.push(booking);
                             facilities[0].rooms[i].bookings.push(bookingCntn);
                             j++;
                         }
                         else {
+                            booking.duration = 1;
                             facilities[0].rooms[i].bookings.push(booking);
                         }
                     }
@@ -207,8 +211,17 @@ calendarApp.controller('calendarController', function ($scope, $http, $location,
         sharedProperties.checkIfBookIsValid(obj);
     };
 
-    $scope.addBooking = function () {
-
+    $scope.addBooking = function (form) {
+        console.log("Add");
+        var roomId = "";
+        var booking = {"description": form.description,
+                        "duration":form.duration,
+                        "date": sharedProperties.getDate(),
+                        "from": form.from,
+                        "to":"",
+                        "roomID":"",
+                        "booked":"true"};
+        console.log(booking.from);
     };
 
     $scope.message = 'Homework for Mads';

@@ -1,6 +1,6 @@
 <div class="calendarContainer" ng-init="init()">
 
-    <div class="day">
+    <!--<div class="day">
         <ul>
             <div class='prev' data-ng-click = 'prevDay()'>❮</div>
             <div class='next' data-ng-click = 'nextDay()'>❯</div>
@@ -8,8 +8,17 @@
                 <span style="font-size: 18px">{{date}}</span>
             </li>
         </ul>
-    </div>
+    </div>-->
 
+    <div class="header">
+        <div class="title"><h3>Booking schedule</h3></div>
+        <div class="dayToggle">
+            <span class='prev' data-ng-click = 'prevDay()'>❮</span>
+            <span class ="dayOverview">{{day}}, {{date}}</span>
+            <span class='next' data-ng-click = 'nextDay()'>❯</span>
+        </div>
+    </div>
+    <br><br>
     <div class="table" ng-init="populate()">
         <div class = "cal" ng-repeat="facility in facilities">
             <div class="tr" id="topRow">
@@ -19,27 +28,16 @@
             <div ng-repeat="facility in facilities">
                 <div class="tr" id="bottomRow" ng-repeat="room in bookingsBasedOnDate">
                     <div class="td" id="roomName">{{room.name}}</div>
+
                     <div class="td" id="room" ng-repeat="booking in room.bookings" ng-style="{'width' : 'calc((100% - 100px) / ' + (hourRange.length) +')'}" ng-click="book(booking)">
-                        <div id="{{booking.booked}}">{{booking.description}}</div>
+                         <div id="{{booking.duration}}" class="{{booking.booked}}">
+                                 {{booking.description}}
+                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
-<!--
-    <div id="addBooking" ng-repeat="facility in facilities">
-        <h3>Book room</h3>
-        <div ng-repeat="room in facility.rooms">
-            <input type="radio" name="roomName" value="roomName">{{room.name}}<br>
-        </div>
-        <input type="text" name="description" value="description" placeholder="description"><br>
-        <input type="radio" name="duration" value="duration" checked>1<br>
-        <select name="from">
-            <option value="from" ng-repeat="available in hourRange">{{available}}</option>
-        </select>
-        <br><br>
-        <button ng-click="">Submit</button>
-    </div>
--->
 
 </div>
