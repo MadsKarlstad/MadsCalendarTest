@@ -67,6 +67,7 @@ calendarApp.service('sharedProperties', function() {
                 console.log(dateUnix);
                 console.log(endUnix);**/
 
+                
                 if (dateUnix > startUnix) {
                     var hourArray = new Array();
                     var startHour = moment(facilities[0].availability[i].startHour, 'H').hours();
