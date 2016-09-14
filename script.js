@@ -22,7 +22,7 @@ calendarApp.service('sharedProperties', function() {
             "" : {},
             "availability" : [
                 {"startDate" : "06-08-2016", "endDate" : "30-10-2016", "startHour" : "08:00", "endHour" : "15:00"},
-                {"startDate" : "31-12-2016", "endDate" : "01-02-2017", "startHour" : "08:00", "endHour" : "18:00"}
+                {"startDate" : "06-08-2016", "endDate" : "30-10-2017", "startHour" : "08:00", "endHour" : "23:00"}
             ],
             "rooms" :   [
                 {"id": "1", "name" : "Northern Hall", "bookings" : []},
@@ -55,19 +55,19 @@ calendarApp.service('sharedProperties', function() {
 
         getDateRange: function () {
 
-            for (i = 0; i < facilities[0].availability.length; i++){
+            for (var i = 0; i < facilities[0].availability.length; i++) {
 
-                var startDate = facilities[0].availability[i].startDate,
-                    endDate = facilities[0].availability[i].endDate;
-                var startUnix = moment(startDate, "DD-MM-YYYY").valueOf(),
-                    endUnix = moment(endDate, "DD-MM-YYYY").valueOf(),
-                    dateUnix = moment(date, "DD-MM-YYYY").valueOf();
+                var startDate   = facilities[0].availability[i].startDate,
+                    endDate     = facilities[0].availability[i].endDate;
+                var startUnix   = moment(startDate, "DD-MM-YYYY").valueOf(),
+                    endUnix     = moment(endDate, "DD-MM-YYYY").valueOf(),
+                    dateUnix    = moment(date, "DD-MM-YYYY").valueOf();
 
                 /**console.log(startUnix);
                 console.log(dateUnix);
                 console.log(endUnix);**/
 
-                if(dateUnix > startUnix){
+                if (dateUnix > startUnix) {
                     var hourArray = new Array();
                     var startHour = moment(facilities[0].availability[i].startHour, 'H').hours();
                     var endHour = moment(facilities[0].availability[i].endHour, 'H').hours();
@@ -109,7 +109,7 @@ calendarApp.service('sharedProperties', function() {
                                         "from" : hourArray[j], "to" : moment(hourArray[j], "H").add(1,'hours').hours() + ":00", "roomID" : i+1,
                                         "booked":"true"};
 
-                        if (booking.description == "") {
+                        if (booking.description === "") {
                             booking.booked = "false";
                             booking.duration = 1;
                         }
@@ -138,7 +138,7 @@ calendarApp.service('sharedProperties', function() {
             var counter = 0;
             for (i = 0; i < facilities[0].rooms.length; i++) {
                 for (j = 0; j < facilities[0].rooms[i].bookings.length; j++) {
-                    if (facilities[0].rooms[i].bookings[j].date == date) {
+                    if (facilities[0].rooms[i].bookings[j].date === date) {
                         roomTemp[i].bookings.push(facilities[0].rooms[i].bookings[j]);
                         counter++;
                     }
@@ -150,7 +150,7 @@ calendarApp.service('sharedProperties', function() {
         isPopulated: function () {
             for(i = 0; i < facilities[0].rooms.length; i++) {
                 for(j = 0; j < facilities[0].rooms[i].bookings.length; j++){
-                    if (facilities[0].rooms[i].bookings[j].date == date && facilities[0].rooms[i].bookings[j] != null) {
+                    if (facilities[0].rooms[i].bookings[j] !== null && facilities[0].rooms[i].bookings[j].date === date) {
                         return true;
                     }
                     else {
@@ -162,7 +162,7 @@ calendarApp.service('sharedProperties', function() {
         },
 
         checkIfBookIsValid: function (value) {
-            if (value.booked == "false") {
+            if (value.booked === "false") {
                 console.log("Available from " + value.from + " to " + value.to);
             }
             else {
@@ -214,13 +214,13 @@ calendarApp.controller('calendarController', function ($scope, $http, $location,
     $scope.addBooking = function (form) {
         console.log("Add");
         var roomId = "";
-        var booking = {"description": form.description,
-                        "duration":form.duration,
-                        "date": sharedProperties.getDate(),
-                        "from": form.from,
-                        "to":"",
-                        "roomID":"",
-                        "booked":"true"};
+        var booking = { "description"   : form.description,
+                        "duration"      : form.duration,
+                        "date"          : sharedProperties.getDate(),
+                        "from"          : form.from,
+                        "to"            : "",
+                        "roomID"        : "",
+                        "booked"        : "true"};
         console.log(booking.from);
     };
 
