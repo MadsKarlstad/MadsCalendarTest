@@ -114,11 +114,13 @@ calendarApp.service('sharedProperties', function() {
                             booking.booked = "false";
                             booking.duration = 1;
                         }
-                        if (booking.duration > 1 && j < dateArray.length) {
+                        if (booking.duration > 1) {
                             var bookingCntn = {"description": "", "duration": 0,"date": booking.date,  "from": booking.from,"roomID" : booking.roomID, "to": booking.to,"booked": "true"};
                             facilities[0].rooms[i].bookings.push(booking);
-                            facilities[0].rooms[i].bookings.push(bookingCntn);
                             j++;
+                            if( j < hourArray.length){
+                                facilities[0].rooms[i].bookings.push(bookingCntn);
+                            }
                         }
                         else {
                             booking.duration = 1;
@@ -145,6 +147,8 @@ calendarApp.service('sharedProperties', function() {
                     }
                 }
             }
+            console.log(roomTemp[0].bookings.length)
+            console.log(roomTemp[1].bookings.length)
             return roomTemp;
         },
 
