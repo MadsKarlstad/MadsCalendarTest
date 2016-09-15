@@ -102,7 +102,6 @@ calendarApp.service('sharedProperties', function() {
             /**if (facilities[0].rooms[0].bookings.length != 0 && facilities[0].rooms[1].bookings.length != 0) {
                 return;
             }**/
-            
             for( x = 0; x < dateArray.length; x++) {
                 for (i = 0; i < facilities[0].rooms.length; i++) {
                     for (j = 0; j < hourArray.length; j++) {
